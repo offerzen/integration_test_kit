@@ -14,18 +14,36 @@ RSpec.describe IntegrationTestKit do
     
     before do
       allow(described_class).to receive(:require)
-      
-      described_class.configure do |config|
-        config.commands_load_path = 'spec/cypress/commands'
-      end
     end
     
     it 'allows for the commands load path to be configured' do
+      described_class.configure do |config|
+        config.commands_load_path = 'spec/cypress/commands'
+      end
+      
       expect(described_class.configuration.commands_load_path).to eq('spec/cypress/commands')
     end
     
     it 'requires files inside the commands load path' do
+      described_class.configure do |config|
+        config.commands_load_path = 'spec/cypress/commands'
+      end
+      
       expect(described_class).to have_received(:require).with(/spec\/cypress\/commands\/test.rb/)
+    end
+    
+    context 'when the Rails environment is not test' do
+      before do
+        allow(Rails.env).to receive(:test?).and_return(false)
+      end
+      
+      it 'raises an environment error' do
+        expect do
+          described_class.configure do |config|
+            config.commands_load_path = 'spec/cypress/commands'
+          end
+        end.to raise_error(IntegrationTestKit::EnvironmentError, 'Rails environment must be "test"')
+      end
     end
   end
   
@@ -62,6 +80,22 @@ RSpec.describe IntegrationTestKit do
       end
     
       expect(described_class.run_command(:test)).to be_truthy
+    end
+    
+    context 'when the Rails environment is not test' do
+      before do
+        allow(Rails.env).to receive(:test?).and_return(false)
+      end
+      
+      it 'raises an environment error' do
+        described_class.define do
+          command(:test) { 3 }
+        end
+        
+        expect do
+          described_class.run_command(:test)
+        end.to raise_error(IntegrationTestKit::EnvironmentError, 'Rails environment must be "test"')
+      end
     end
   end
 end

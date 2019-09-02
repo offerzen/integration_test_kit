@@ -1,6 +1,7 @@
-require "integration_test_kit/engine"
-require "integration_test_kit/configuration"
-require "integration_test_kit/registry"
+require 'integration_test_kit/engine'
+require 'integration_test_kit/configuration'
+require 'integration_test_kit/registry'
+require 'integration_test_kit/errors'
 
 module IntegrationTestKit
   @commands = {}
@@ -14,6 +15,8 @@ module IntegrationTestKit
   end
   
   def self.configure
+    raise EnvironmentError unless Rails.env.test?
+    
     yield configuration
     
     Dir[Rails.root.join(configuration.commands_load_path, '*.rb')].each do |file|
@@ -22,6 +25,8 @@ module IntegrationTestKit
   end
 
   def self.run_command(name)
+    raise EnvironmentError unless Rails.env.test?
+    
     @commands[name.to_sym].call
 
     true

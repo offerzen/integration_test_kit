@@ -29,8 +29,9 @@ Cypress.Commands.add('appCommand', command => {
 ```
 
 ## Installation
-**Things to note:**
+### Things to note
 * Integration Test Kit is meant for usage within the test environment only. Don't include it or configure it in production.
+* There is a check to ensure that the gem is only configured for the test environment during configuration and when running commands.  
 * The gem is a Rails Engine, and is meant for usage within a Rails application.
 
 Add this line to your application's Gemfile in the test group:
