@@ -1,3 +1,3 @@
 IntegrationTestKit::Engine.routes.draw do
-  resources :commands, param: :name, only: :create
+  resources :commands, only: :create
 end
