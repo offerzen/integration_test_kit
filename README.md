@@ -1,4 +1,4 @@
-# IntegrationTestKit
+# Integration Test Kit
 Integration Test Kit provides a small DSL for defining integration test commands, and an endpoint for calling them locally.
 
 The initial use case was for running integration test commands for specific testing scenarios in [Cypress](https://www.cypress.io), such as cleaning the test database or creating seed data.
@@ -15,16 +15,17 @@ IntegrationTestKit.define do
 end  
 ```
 
-You can then run commands with a POST to `/<name_of_mount_path>/commands/<name_of_command>`.
+You can then run commands with a POST to `/<name_of_mount_path>/commands?name=<name_of_command>`, or with `"name": "example"` in the body as JSON.
 
 If you're using Cypress, you can add a command to your `support/commands.js` file to make this easier:
 ```js
 Cypress.Commands.add('appCommand', command => {
   cy.request({
     method: 'POST',
-    url: `/<name_of_mount_path>/commands/${command}`,
-    log: true,
-    failOnStatusCode: true
+    url: `/<name_of_mount_path>/commands`,
+    body: {
+      name: command
+    }
   })
 })
 ```
@@ -83,7 +84,7 @@ if Rails.env.test?
 end  
 ```
 
-You are now able to run commands with a POST to `/integration_test_kit/commands/example`. 
+You are now able to run commands with a POST to `/integration_test_kit/commands/name=example`, or with `"name": "example"` in the body as JSON.
 
 ## Contributing
 Feel free to create an issue or submit a PR. 
