@@ -91,7 +91,7 @@ Feel free to create an issue or submit a PR.
 
 ## Release
 
-1. Bump the [version](https://semver.org/)
+1. [Bump the version](https://semver.org/)
 2. Follow the standard [ruby gems release guide](https://bundler.io/v2.0/guides/creating_gem.html#releasing-the-gem)
 
 ## License
