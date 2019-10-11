@@ -3,7 +3,7 @@ Integration Test Kit provides a small DSL for defining integration test commands
 
 The initial use case was for running integration test commands for specific testing scenarios in [Cypress](https://www.cypress.io), such as cleaning the test database or creating seed data.
 
-Integration Test Kit is inspired by the functionality of [Cypress On Rails](https://github.com/shakacode/cypress-on-rails). 
+Integration Test Kit is inspired by the functionality of [Cypress On Rails](https://github.com/shakacode/cypress-on-rails).
 
 ## Usage
 You'll need to define commands within a directory of your choosing. Commands are set up using a simple DSL:
@@ -12,7 +12,7 @@ IntegrationTestKit.define do
   command :example do
     puts 'Ruby code can be run here'
   end
-end  
+end
 ```
 
 You can then run commands with a POST to `/<name_of_mount_path>/commands?name=<name_of_command>`, or with `"name": "example"` in the body as JSON.
@@ -33,7 +33,7 @@ Cypress.Commands.add('appCommand', command => {
 ## Installation
 ### Things to note
 * Integration Test Kit is meant for usage within the test environment only. Don't include it or configure it in production.
-* There is a check to ensure that the gem is only configured for the test environment during configuration and when running commands.  
+* There is a check to ensure that the gem is only configured for the test environment during configuration and when running commands.
 * The gem is a Rails Engine, and is meant for usage within a Rails application.
 
 Add this line to your application's Gemfile in the test group:
@@ -70,24 +70,29 @@ IntegrationTestKit.define do
   command :example do
     puts 'Ruby code can be run here'
   end
-  
+
   command :another_example do
     puts 'Ruby code can be run here'
   end
-end  
+end
 ```
 
 Mount the routes within your application (`routes.rb` or equivalent):
 ```ruby
 if Rails.env.test?
   mount IntegrationTestKit::Engine => '/integration_test_kit'
-end  
+end
 ```
 
 You are now able to run commands with a POST to `/integration_test_kit/commands/name=example`, or with `"name": "example"` in the body as JSON.
 
 ## Contributing
-Feel free to create an issue or submit a PR. 
+Feel free to create an issue or submit a PR.
+
+## Release
+
+1. Bump the [version](https://semver.org/)
+2. Follow the standard [ruby gems release guide](https://bundler.io/v2.0/guides/creating_gem.html#releasing-the-gem)
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
