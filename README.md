@@ -1,4 +1,7 @@
 # Integration Test Kit
+
+[![HitCount](http://hits.dwyl.io/Offerzen/integration_test_kit.svg)](http://hits.dwyl.io/Offerzen/integration_test_kit)
+
 Integration Test Kit provides a small DSL for defining integration test commands, and an endpoint for calling them locally.
 
 The initial use case was for running integration test commands for specific testing scenarios in [Cypress](https://www.cypress.io), such as cleaning the test database or creating seed data.
